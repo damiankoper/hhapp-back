@@ -4,7 +4,10 @@ import App from '../../../dist/app';
 describe('Users controller', () => {
   let app: any;
   beforeAll(async done => {
-    app = await new App(3002).run();
+    app = await new App({
+      logging: ['info'],
+      port: 0
+    }).run();
     done();
   });
 

@@ -28,7 +28,11 @@
     "coverage": "jest --coverage",
     "watch": "npm run build -- --watch",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
-    "watch:test": "jest --watch"
+    "watch:test": "jest --watch",
+
+    "docker:test": "docker-compose exec hhapp-back-dev npm run watch:test",
+    "docker:dev": "docker-compose up --build",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.0",

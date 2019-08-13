@@ -1,3 +1,5 @@
 import App from './app';
 
-new App(3000).run();
+new App({
+  port: 3000,
+}).run();
