@@ -21,15 +21,15 @@ export default class UserController extends BaseController {
   }
 
   public async store(req: Request, res: Response) {
-    const user = await User.create(req.body);
-    return res.status(201).send(user);
+    const user = User.create(req.body);
+    return res.status(201).send(await user.save());
   }
 
   public async update(req: Request, res: Response) {
     const user = await User.findOne(req.params.id);
     if (user) {
       await User.merge(user, req.body);
-      return res.send(await User.save(user));
+      return res.send(await user.save());
     }
     return res.status(404).send();
   }
