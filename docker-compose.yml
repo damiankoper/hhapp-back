@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  # Run compiled app in watch mode
+  hhapp-back-dev:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: 'develop-build-stage'
+    ports:
+    - '3000:3000'
+    - '9229:9229' # Node debug
+    tty: true
+    volumes:
+      - '.:/app'
+     # - '/tmp:/tmp' # Used to pass jest test result from container outside to vscode
+      - '/app/node_modules' # Used to keep all modules inside container
+    command: ['pm2-runtime', 'start', 'ecosystem.dev.config.js', '--only=hhapp-back-dev', '--no-auto-exit']
+    depends_on:
+      - hhapp-back-database
+
+  # Watch for .ts file changes and compile
+  hhapp-back-dev-watcher:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: 'develop-build-stage'
+    tty: true
+    volumes:
+    - '.:/app'
+    - '/app/node_modules' # Used to keep all modules inside container
+    command: ['pm2-runtime', 'start', 'ecosystem.dev.config.js', '--only=hhapp-back-dev-watcher']
+    depends_on:
+      - hhapp-back-dev
+
+  # Database
+  hhapp-back-database:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./.docker/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'hhapp'
+      MYSQL_USER: 'hhapp'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306'
+

@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "hhapp-back-database",
+  "port": 3306,
+  "username": "hhapp",
+  "password": "password",
+  "database": "hhapp",
+  "entities": [
+    "dist/entity/*.js"
+  ],
+  "logging": true,
+  "synchronize": true
+}

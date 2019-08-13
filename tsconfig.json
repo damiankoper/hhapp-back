@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext"
+    ],
+    "target": "es2015",
+    "outDir": "./dist",
+    "removeComments": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

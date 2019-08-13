@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  # Run compiled app in watch mode
+  hhapp-back-prod:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: build-stage
+    ports:
+      - '3000:3000'
+    command: ['pm2-runtime', 'start', 'ecosystem.prod.config.js']
+    depends_on:
+      - hhapp-back-database
+
+  # Database
+  hhapp-back-database:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./.docker/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'hhapp'
+      MYSQL_USER: 'hhapp'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306'
+
