@@ -1,7 +1,19 @@
-language: node_js
-node_js:
-  - 'node' # use latest stable nodejs version
+sudo: 'required'
+language: 'generic'
+services:
+  - docker
+env:
+  - DOCKER_COMPOSE_VERSION=1.24.1
+before_install:
+  - sudo apt-get update -y
+  - sudo apt-get install docker-ce -y
+  - sudo service docker restart
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 script:
-  - npm run coverage # jest test with coverage flag does coverage too
+  - docker-compose run hhapp-back-dev npm run coverage
 after_script:
-  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls' # sends the coverage report to coveralls
+  - docker-compose run hhapp-back-dev sed -i.bak "s@^SF:/app/@SF:@" coverage/lcov.info
+  - docker-compose run hhapp-back-dev cat coverage/lcov.info | npx coveralls

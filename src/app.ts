@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 import UsersRouter from './api/routes/users.router';
+import { Server } from 'net';
 
 interface IAppConfig {
   logging?: boolean | 'all' | string[] | undefined;
@@ -9,6 +10,8 @@ interface IAppConfig {
 }
 
 export default class App {
+  private app!: express.Application
+  private http!: Server
   private config: IAppConfig;
   public constructor(config: IAppConfig) {
     this.config = config;
@@ -19,22 +22,25 @@ export default class App {
     Object.assign(connectionOptions, { logging: this.config.logging || 'all' });
 
     // create typeorm connection
-    const connection = await createConnection(connectionOptions);
+    await createConnection(connectionOptions);
     // create and setup express app
     const app = express();
     app.use(bodyParser.json());
     app.use('/users', UsersRouter);
-    app.listen(this.config.port);
+    const http: Server = app.listen(this.config.port);
+
+    this.app = app
+    this.http = http
 
     process.on('SIGINT', async () => {
-      await connection.close();
+      this.destroy()
       process.exit();
     });
-
     return app;
   }
 
   public async destroy() {
     await getConnection().close();
+    await this.http.close()
   }
 }

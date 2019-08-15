@@ -3,7 +3,7 @@ FROM node:lts-alpine AS develop-stage
 
 # Install alpine stuff
 RUN apk add --no-cache git
-
+RUN apk add --no-cache bash
 
 WORKDIR /app
 RUN npm install -g pm2

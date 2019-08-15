@@ -3,21 +3,25 @@ import App from '../../../dist/app';
 
 describe('Users controller', () => {
   let app: any;
+  let express: any;
   beforeAll(async done => {
-    app = await new App({
+    app = new App({
       logging: ['info'],
-      port: 0
-    }).run();
+      port: 0,
+    });
+    express = await app.run();
     done();
   });
 
-  afterAll(async () => {
+  afterAll(async done => {
     await app.destroy();
+    done();
   });
 
-  it('should get users', async () => {
-    await request(app)
+  it('should get users', async done => {
+    await request(express)
       .get('/users')
       .expect(200);
+    done();
   });
 });
