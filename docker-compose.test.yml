@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
       target: 'develop-build-stage'
+    volumes:
+      - coverage:/app/coverage
     depends_on:
       - hhapp-back-database
 
