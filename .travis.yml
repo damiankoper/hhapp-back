@@ -16,4 +16,4 @@ script:
   - docker-compose -f docker-compose.test.yml run hhapp-back-test npm run coverage
 after_script:
   - docker-compose -f docker-compose.test.yml run hhapp-back-test sed -i.bak "s@^SF:/app/@SF:@" coverage/lcov.info
-  - docker-compose -f docker-compose.test.yml run hhapp-back-test cat coverage/lcov.info | npx coveralls
+  - docker-compose -f docker-compose.test.yml run hhapp-back-test /bin/bash -c "cat coverage/lcov.info | npx coveralls"
