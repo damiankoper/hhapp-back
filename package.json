@@ -32,7 +32,9 @@
 
     "docker:test": "docker-compose exec hhapp-back-dev npm run watch:test",
     "docker:dev": "docker-compose up --build",
-    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build",
+    "docker:ci": "docker-compose -f docker-compose.test.yml up"
+
   },
   "dependencies": {
     "@types/body-parser": "^1.17.0",

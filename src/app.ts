@@ -1,8 +1,8 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import { Server } from 'net';
 import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 import UsersRouter from './api/routes/users.router';
-import { Server } from 'net';
 
 interface IAppConfig {
   logging?: boolean | 'all' | string[] | undefined;
@@ -10,7 +10,6 @@ interface IAppConfig {
 }
 
 export default class App {
-  private app!: express.Application
   private http!: Server
   private config: IAppConfig;
   public constructor(config: IAppConfig) {
@@ -29,7 +28,6 @@ export default class App {
     app.use('/users', UsersRouter);
     const http: Server = app.listen(this.config.port);
 
-    this.app = app
     this.http = http
 
     process.on('SIGINT', async () => {

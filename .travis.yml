@@ -13,7 +13,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
-  - docker-compose run hhapp-back-dev npm run coverage
+  - docker-compose run hhapp-back-test npm run docker:ci
 after_script:
-  - docker-compose run hhapp-back-dev sed -i.bak "s@^SF:/app/@SF:@" coverage/lcov.info
-  - docker-compose run hhapp-back-dev cat coverage/lcov.info | npx coveralls
+  - docker-compose run hhapp-back-test sed -i.bak "s@^SF:/app/@SF:@" coverage/lcov.info
+  - docker-compose run hhapp-back-test cat coverage/lcov.info | npx coveralls
