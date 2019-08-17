@@ -30,7 +30,7 @@
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch",
 
-    "docker:test": "docker-compose exec hhapp-back-dev npm run watch:test",
+    "docker:dev:test": "docker-compose exec hhapp-back-dev npm run watch:test",
     "docker:dev": "docker-compose up --build",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
   },
