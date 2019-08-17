@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/damiankoper/hhapp-back.svg?branch=master)](https://travis-ci.org/damiankoper/hhapp-back.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/damiankoper/hhapp-back/badge.svg?branch=master)](https://coveralls.io/github/damiankoper/hhapp-back?branch=master)
-# HouseholdApp back
+# HouseholdApp Back
 Built and tested with:
 * [ExpressJS](https://expressjs.com/)
 * [TypeORM](https://typeorm.io/#/)
