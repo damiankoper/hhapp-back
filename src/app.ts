@@ -10,7 +10,7 @@ interface IAppConfig {
 }
 
 export default class App {
-  private http!: Server
+  private http!: Server;
   private config: IAppConfig;
   public constructor(config: IAppConfig) {
     this.config = config;
@@ -28,10 +28,10 @@ export default class App {
     app.use('/users', UsersRouter);
     const http: Server = app.listen(this.config.port);
 
-    this.http = http
+    this.http = http;
 
     process.on('SIGINT', async () => {
-      this.destroy()
+      this.destroy();
       process.exit();
     });
     return app;
@@ -39,6 +39,6 @@ export default class App {
 
   public async destroy() {
     await getConnection().close();
-    await this.http.close()
+    await this.http.close();
   }
 }
