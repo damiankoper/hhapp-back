@@ -1,9 +1,9 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -23,7 +23,7 @@ export default class User extends BaseEntity {
 
   @Column({ length: 100, select: false })
   public password!: string;
-  
+
   @CreateDateColumn()
   public createdAt!: Date;
 
