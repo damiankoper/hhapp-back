@@ -29,8 +29,12 @@
     "watch": "npm run build -- --watch",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch",
+<<<<<<< Updated upstream
 
     "docker:dev:test": "docker-compose exec hhapp-back-dev npm run watch:test",
+=======
+    "docker:test": "docker-compose exec hhapp-back-dev npm run watch:test",
+>>>>>>> Stashed changes
     "docker:dev": "docker-compose up --build",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
   },

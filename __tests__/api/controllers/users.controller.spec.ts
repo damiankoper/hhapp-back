@@ -19,7 +19,29 @@ describe('Users controller', () => {
   });
 
   it('should get users', async done => {
+    let response = await request(express)
+      .get('/users')
+      .expect(200);
+    expect(response.body).toHaveLength(0);
+  });
+  it('should fail when user does not exist', async done => {
     await request(express)
+      .get('/users/1')
+      .expect(404);
+  });
+  it('should create and delete user', async done => {
+    const user = {
+      firstName: 'XD',
+      lastName: 'XDD',
+    };
+    let response = await request(express)
+      .post('/users')
+      .send(user)
+      .expect(201);
+    expect(response.body.firstName).toEqual(user.firstName);
+    expect(response.body.lastName).toEqual(user.lastName);
+    //expect(response.body.id).toBeGreaterThan(0);
+    response = await request(express)
       .get('/users')
       .expect(200);
     done();
