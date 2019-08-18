@@ -22,12 +22,14 @@ describe('Users controller', () => {
     let response = await request(express)
       .get('/users')
       .expect(200);
+    done();
     expect(response.body).toHaveLength(0);
   });
   it('should fail when user does not exist', async done => {
     await request(express)
       .get('/users/1')
       .expect(404);
+    done();
   });
   it('should create and delete user', async done => {
     const user = {
