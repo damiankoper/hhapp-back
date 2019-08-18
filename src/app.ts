@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Server } from 'net';
 import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
+import SessionRouter from './api/routes/session.router';
 import UsersRouter from './api/routes/users.router';
 
 interface IAppConfig {
@@ -25,7 +26,7 @@ export default class App {
     // create and setup express app
     const app = express();
     app.use(bodyParser.json());
-    app.use('/users', UsersRouter);
+    this.initRoutes(app);
     const http: Server = app.listen(this.config.port);
 
     this.http = http;
@@ -40,5 +41,10 @@ export default class App {
   public async destroy() {
     await getConnection().close();
     await this.http.close();
+  }
+
+  private initRoutes(app: express.Application) {
+    app.use('/users', UsersRouter);
+    app.use('/session', SessionRouter);
   }
 }

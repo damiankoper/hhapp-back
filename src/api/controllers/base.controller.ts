@@ -1,9 +1,13 @@
+import { Router } from 'express';
+
 export default class BaseController {
-  public constructor() {
-    this.initMiddleware();
+  public constructor(router?: Router) {
+    if (router) {
+      this.initMiddleware(router);
+    }
   }
 
-  public initMiddleware() {
+  protected initMiddleware(router: Router) {
     return;
   }
 }

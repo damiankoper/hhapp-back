@@ -2,7 +2,7 @@ import { Router } from 'express';
 import UserController from '../controllers/user.controller';
 
 const UsersRouter: Router = Router();
-const userController = new UserController();
+const userController = new UserController(UsersRouter);
 
 UsersRouter.get('/', userController.get);
 UsersRouter.get('/:id', userController.find);
