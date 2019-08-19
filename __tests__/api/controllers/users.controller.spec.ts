@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import App from '../../../dist/app';
-import User from '../../../dist/entity/User';
+import User from '../../../dist/entity/User.js';
 
 jest.mock('../../../dist/api/middlewares/session.middleware.js');
 
