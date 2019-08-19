@@ -22,7 +22,7 @@
   },
   "include": [
     "src/**/*",
-    "__mocks__/session.middleware.ts"
+    "src/api/middlewares/__mocks__/session.middleware.ts"
   ],
   "exclude": [
     "node_modules",
