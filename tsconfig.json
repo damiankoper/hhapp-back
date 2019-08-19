@@ -18,10 +18,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "src/api/middlewares/__mocks__/session.middleware.ts"
   ],
   "exclude": [
     "node_modules",

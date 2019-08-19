@@ -1,9 +1,11 @@
-export default class BaseController {
-  public constructor() {
-    this.initMiddleware();
+import { Router } from 'express';
+
+export default abstract class BaseController {
+  public constructor(router?: Router) {
+    if (router) {
+      this.initMiddleware(router);
+    }
   }
 
-  public initMiddleware() {
-    return;
-  }
+  protected abstract initMiddleware(router: Router): void;
 }
