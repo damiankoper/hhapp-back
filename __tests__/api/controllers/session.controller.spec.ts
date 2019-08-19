@@ -68,6 +68,6 @@ describe('Session controller', () => {
       })
       .expect(201);
     expect(response.text.length).toBeGreaterThan(50);
-    expect((jwt.decode(response.text) as any).user).toEqual(user.id)
+    expect((jwt.decode(response.text) as any).user).toEqual(user.id);
   });
 });

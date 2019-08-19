@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcryptjs';
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import User from '../../entity/User';
@@ -34,4 +34,8 @@ export default class SessionController extends BaseController {
   /* public async delete(req: Request, res: Response) {
     return res.send();
   } */
+
+  protected initMiddleware(router: Router) {
+    return;
+  }
 }
