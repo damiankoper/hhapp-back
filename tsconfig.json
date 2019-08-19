@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "__mocks__/session.middleware.ts"
   ],
   "exclude": [
     "node_modules",

@@ -70,4 +70,38 @@ describe('Session controller', () => {
     expect(response.text.length).toBeGreaterThan(50);
     expect((jwt.decode(response.text) as any).user).toEqual(user.id);
   });
+
+  it('should return 401 without token', async () => {
+    await request(express)
+      .get('/users')
+      .expect(401);
+  });
+
+  it('should return 401 with not valid token', async () => {
+    await request(express)
+      .get('/users')
+      .set('Authorization', 'Bearer shittoken123')
+      .expect(401);
+
+    await request(express)
+      .get('/users')
+      .set('Authorization', 'Tigerer shittoken123')
+      .expect(401);
+  });
+
+  it('should return 200 with valid token', async () => {
+    await User.create(userData).save();
+    const response = await request(express)
+      .post('/session')
+      .send({
+        password: userData.passwordNotHashed,
+        username: userData.username,
+      })
+      .expect(201);
+
+    await request(express)
+      .get('/users')
+      .set('Authorization', 'Bearer ' + response.text)
+      .expect(200);
+  });
 });
