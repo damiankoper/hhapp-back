@@ -51,9 +51,33 @@ describe('Users controller', () => {
     expect(response.body.firstName).toEqual(user.firstName);
     expect(response.body.lastName).toEqual(user.lastName);
     expect(response.body.password).toBeUndefined();
-    // expect(response.body.id).toBeGreaterThan(0);
+    expect(response.body.id).toBeGreaterThan(0);
     response = await request(express)
       .get('/users')
       .expect(200);
   });
+
+  it('should update user', async () => {
+    const userData = {
+      firstName: 'XD',
+      lastName: 'XDD',
+      password: 'XDD',
+      username: 'XDD',
+    };
+    const user = await User.create(userData).save();
+    const userUpdated = {
+      firstName: 'XDu',
+      lastName: 'XDu',
+    };
+    let response = await request(express)
+      .put('/users/' + user.id)
+      .send(userUpdated)
+      .expect(200);
+    expect(response.body.firstName).toEqual(userUpdated.firstName);
+    expect(response.body.lastName).toEqual(userUpdated.lastName);
+    response = await request(express)
+      .get('/users/' + user.id)
+      .expect(200);
+  });
+
 });
