@@ -4,6 +4,13 @@ import User from '../../../dist/entity/User.js';
 
 jest.mock('../../../dist/api/middlewares/session.middleware.js');
 
+function doExpectCreate(response: request.Response, user: any) {
+  expect(response.body.firstName).toEqual(user.firstName);
+  expect(response.body.lastName).toEqual(user.lastName);
+  expect(response.body.password).toBeUndefined();
+  expect(response.body.id).toBeGreaterThan(0);
+}
+
 describe('Users controller', () => {
   let app: any;
   let express: any;
@@ -49,13 +56,11 @@ describe('Users controller', () => {
       .post('/users')
       .send(userData)
       .expect(201);
-    expect(response.body.firstName).toEqual(userData.firstName);
-    expect(response.body.lastName).toEqual(userData.lastName);
-    expect(response.body.password).toBeUndefined();
-    expect(response.body.id).toBeGreaterThan(0);
+    doExpectCreate(response, userData);
     response = await request(express)
-      .get('/users')
+      .get('/users/' + response.body.id)
       .expect(200);
+    doExpectCreate(response, userData);
   });
 
   it('should update user', async () => {
