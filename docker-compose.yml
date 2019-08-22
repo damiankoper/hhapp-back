@@ -5,35 +5,22 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: 'develop-build-stage'
+      target: 'develop-stage'
     ports:
     - '3000:3000'
     - '9229:9229' # Node debug
     tty: true
     volumes:
       - '.:/app'
-     # - '/tmp:/tmp' # Used to pass jest test result from container outside to vscode
       - '/app/node_modules' # Used to keep all modules inside container
-    command: ['pm2-runtime', 'start', 'ecosystem.dev.config.js', '--only=hhapp-back-dev', '--no-auto-exit']
+    command: sh -c '/wait-for -t 60 hhapp-back-dev-database:3306 -- pm2-runtime start ecosystem.dev.config.js --no-auto-exit'
     depends_on:
-      - hhapp-back-database
-
-  # Watch for .ts file changes and compile
-  hhapp-back-dev-watcher:
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
-      target: 'develop-build-stage'
-    tty: true
-    volumes:
-    - '.:/app'
-    - '/app/node_modules' # Used to keep all modules inside container
-    command: ['pm2-runtime', 'start', 'ecosystem.dev.config.js', '--only=hhapp-back-dev-watcher']
-    depends_on:
-      - hhapp-back-dev
+      - hhapp-back-dev-database
+    environment:
+      DB_HOST: 'hhapp-back-dev-database'
 
   # Database
-  hhapp-back-database:
+  hhapp-back-dev-database:
     image: mariadb
     restart: always
     volumes:

@@ -19,7 +19,9 @@ export default class App {
 
   public async run() {
     const connectionOptions = await getConnectionOptions();
-    Object.assign(connectionOptions, { logging: this.config.logging || 'all' });
+    Object.assign(connectionOptions, {
+      logging: this.config.logging || 'all'
+    });
 
     // create typeorm connection
     await createConnection(connectionOptions);

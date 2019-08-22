@@ -1,12 +1,12 @@
-{
+module.exports = {
   "type": "mysql",
-  "host": "hhapp-back-database",
+  "host": process.env.DB_HOST || 'hhapp-database',
   "port": 3306,
   "username": "hhapp",
   "password": "password",
   "database": "hhapp",
   "entities": [
-    "dist/entity/*.js"
+    "./src/entity/*.ts"
   ],
   "logging": true,
   "synchronize": true
