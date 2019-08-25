@@ -34,16 +34,16 @@ export default class ShoppingItem extends BaseEntity {
     @Column({ type: "boolean" })
     public shared!: boolean;
 
-    @ManyToOne(type => User, user => user.shoppingItemsBoughtBy, { onDelete: "CASCADE" })
+    @ManyToOne(type => User, user => user.shoppingItemsBoughtBy, { onDelete: "CASCADE", nullable: false })
     public boughtBy!: User;
 
-    @ManyToOne(type => User, user => user.shoppingItemsBoughtFor, { onDelete: "CASCADE" })
+    @ManyToOne(type => User, user => user.shoppingItemsBoughtFor, { onDelete: "CASCADE", nullable: false })
     public boughtFor!: User;
 
-    @ManyToOne(type => Shop, shop => shop.shoppingItems, { onDelete: "CASCADE" })
+    @ManyToOne(type => Shop, shop => shop.shoppingItems, { onDelete: "CASCADE", nullable: false })
     public shop!: Shop;
 
-    @ManyToOne(type => ShoppingCategory, shoppingCategory => shoppingCategory.shoppingItems, { onDelete: "CASCADE" })
+    @ManyToOne(type => ShoppingCategory, shoppingCategory => shoppingCategory.shoppingItems, { onDelete: "CASCADE", nullable: false })
     public category!: ShoppingCategory;
 
     @CreateDateColumn()

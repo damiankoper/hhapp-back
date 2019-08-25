@@ -20,7 +20,7 @@ export default class ShoppingListItem extends BaseEntity {
     @Column({ type: "float" })
     public quantity!: number;
 
-    @ManyToOne(type => ShoppingList, shoppingList => shoppingList.items, { onDelete: "CASCADE" })
+    @ManyToOne(type => ShoppingList, shoppingList => shoppingList.items, { onDelete: "CASCADE", nullable: false })
     public shoppingList!: ShoppingList;
 
     @CreateDateColumn()
