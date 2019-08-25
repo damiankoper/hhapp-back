@@ -25,7 +25,7 @@
     "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
     "build": "tsc --pretty",
     "test": "jest --runInBand",
-    "coverage": "jest --coverage --runInBand --collectCoverageFrom=!*.js",
+    "coverage": "jest --coverage --runInBand",
     "watch": "npm run build -- --watch",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch --runInBand",
