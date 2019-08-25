@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
       name: 'hhapp-back-prod',
-      script: 'dist/index.js',
+      script: 'src/index.ts',
       max_memory_restart: '1G'
     }
   ]

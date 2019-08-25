@@ -1,8 +1,7 @@
 import * as request from 'supertest';
-import App from '../../../dist/app';
-import User from '../../../dist/entity/User.js';
-
-jest.mock('../../../dist/api/middlewares/session.middleware.js');
+import App from '../../../src/app';
+import User from '../../../src/entity/User';
+jest.mock('../../../src/api/middlewares/session.middleware');
 
 function doExpectCreate(response: request.Response, user: any) {
   expect(response.body.firstName).toEqual(user.firstName);
@@ -81,7 +80,7 @@ describe('Users controller', () => {
   });
   it('should delete user', async () => {
     const user = await User.create(userData).save();
-    let response = await request(express)
+    const response = await request(express)
       .delete('/users/' + user.id)
       .expect(200);
     expect(response.body.firstName).toEqual(user.firstName);

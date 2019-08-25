@@ -13,3 +13,4 @@ README.md
 LICENSE
 .vscode
 .docker
+!.docker/wait-for

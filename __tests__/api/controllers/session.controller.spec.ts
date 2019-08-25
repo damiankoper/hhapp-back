@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as request from 'supertest';
-import App from '../../../dist/app';
-import User from '../../../dist/entity/User';
+import App from '../../../src/app';
+import User from '../../../src/entity/User';
 
 describe('Session controller', () => {
   let app: any;

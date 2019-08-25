@@ -1,20 +1,25 @@
 version: '3.7'
 services:
-  # Run compiled app in watch mode
   hhapp-back-test:
     build:
       context: .
       dockerfile: .docker/Dockerfile
-      target: 'develop-build-stage'
+      target: 'develop-stage'
+    ports:
+      - '9229:9229'
+    tty: true    
     volumes:
-      - './coverage:/app/coverage'
+      - '.:/app'
+      - '/app/node_modules' # Used to keep all modules inside container
     depends_on:
-      - hhapp-back-database
+      - hhapp-back-test-database   
+    environment:
+      DB_HOST: 'hhapp-back-test-database'
 
   # Database
-  hhapp-back-database:
+  hhapp-back-test-database:
     image: mariadb
-    restart: always
+    restart: 'no'
     environment:
       MYSQL_DATABASE: 'hhapp'
       MYSQL_USER: 'hhapp'
