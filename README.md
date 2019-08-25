@@ -12,14 +12,20 @@ Set on:
 * DockerCompose@1.24.1
 
 ## Run for development
+To run app in watch mode:
 ```
 npm run docker:dev
 ```
-### Test watcher
-After launching `dev` docker services:
+## Tests
+Tests operates on seperate database container refreshed before each run. To run all tests with coverage once (e.g. for CI) type:
 ```
-npm run docker:dev:test
+npm run docker:test
 ```
+To run tests in watch mode:
+```
+npm run docker:test:watch
+```
+In watch mode database's state persists between runs so it is important to remove unnecessary records before/after each test/suite.
 
 ## Run for production
 ```
