@@ -25,14 +25,12 @@
     "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
     "build": "tsc --pretty",
     "test": "jest --runInBand",
-    "coverage": "jest --coverage --runInBand --collectCoverageFrom=!*.js",
+    "coverage": "jest --coverage --runInBand",
     "watch": "npm run build -- --watch",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch --runInBand",
-
     "docker:test:watch": "docker-compose  -f docker-compose.test.yml run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run watch:test; docker-compose -f docker-compose.test.yml down -v",
     "docker:test": "docker-compose -f docker-compose.test.yml run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run coverage; docker-compose -f docker-compose.test.yml down -v",
-
     "docker:dev:exec": "docker-compose exec hhapp-back-dev",
     "docker:dev": "docker-compose up --build",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
