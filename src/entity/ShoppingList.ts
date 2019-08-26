@@ -23,10 +23,10 @@ export default class ShoppingList extends BaseEntity {
     @OneToMany(type => ShoppingListItem, shoppingListItem => shoppingListItem.shoppingList)
     public items!: ShoppingListItem[];
 
-    @ManyToOne(type => User, user => user.shoppingList, { nullable: true, onDelete: "CASCADE" })
+    @ManyToOne(type => User, user => user.shoppingLists, { nullable: true, onDelete: "CASCADE" })
     public assigned?: User;
 
-    @ManyToOne(type => Shop, shop => shop.shoppingList, { nullable: true, onDelete: "CASCADE" })
+    @ManyToOne(type => Shop, shop => shop.shoppingLists, { nullable: true, onDelete: "CASCADE" })
     public shop?: Shop;
 
     @CreateDateColumn()
