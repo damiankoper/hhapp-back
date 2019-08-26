@@ -23,7 +23,7 @@ export default class ShoppingCategory extends BaseEntity {
     @OneToMany(type => ShoppingItem, shoppingItem => shoppingItem.category)
     public shoppingItems!: ShoppingItem[];
 
-    @Column({ length: 7 })
+    @Column({ length: 7, default: "#ffffff" })
     public color!: string;
 
     @CreateDateColumn()

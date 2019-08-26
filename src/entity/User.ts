@@ -36,8 +36,8 @@ export default class User extends BaseEntity {
   @OneToMany(type => ShoppingItem, shoppingItem => shoppingItem.boughtFor)
   public shoppingItemsBoughtFor!: ShoppingItem[];
 
-  @OneToMany(type => ShoppingList, shoppingList => shoppingList.assigned, { nullable: true })
-  public shoppingList!: ShoppingList[];
+  @OneToMany(type => ShoppingList, shoppingList => shoppingList.assigned)
+  public shoppingLists!: ShoppingList[];
 
   @CreateDateColumn()
   public createdAt!: Date;

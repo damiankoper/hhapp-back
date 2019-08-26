@@ -18,14 +18,14 @@ export default class Shop extends BaseEntity {
     @Column()
     public name!: string;
 
-    @Column({ length: 7 })
+    @Column({ length: 7, default: "#ffffff" })
     public color!: string;
 
     @OneToMany(type => ShoppingItem, shoppingItem => shoppingItem.shop)
     public shoppingItems!: ShoppingItem[];
 
     @OneToMany(type => ShoppingList, shoppingList => shoppingList.shop)
-    public shoppingList!: ShoppingList[];
+    public shoppingLists!: ShoppingList[];
 
     @CreateDateColumn()
     public createdAt!: Date;
