@@ -27,7 +27,7 @@ export default class User extends BaseEntity {
   @Column({ length: 100, select: false })
   public password!: string;
 
-  @Column({ length: 7 })
+  @Column({ length: 7, default: "#ffffff" })
   public color!: string;
 
   @OneToMany(type => ShoppingItem, shoppingItem => shoppingItem.boughtBy)
