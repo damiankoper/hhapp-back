@@ -26,6 +26,7 @@
     "build": "tsc",
     "test": "jest --runInBand",
     "coverage": "jest --coverage --runInBand",
+
     "watch": "npm run build -- --watch --preserveWatchOutput",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch --runInBand",

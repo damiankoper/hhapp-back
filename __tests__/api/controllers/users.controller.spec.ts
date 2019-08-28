@@ -88,4 +88,19 @@ describe('Users controller', () => {
     const userAfterDeletion = await User.findOne(user.id);
     expect(userAfterDeletion).toBeUndefined();
   });
+  it('should fail deletion if user does not exist', async () => {
+    await request(express)
+      .delete('/users/1')
+      .expect(404);
+  });
+  it('should fail updating if user does not exist', async () => {
+    const userUpdated = {
+      firstName: 'XDu',
+      lastName: 'XDu',
+    };
+    await request(express)
+      .put('/users/1')
+      .send(userUpdated)
+      .expect(404);
+  });
 });
