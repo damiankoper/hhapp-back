@@ -20,7 +20,8 @@ export default class App {
   public async run() {
     const connectionOptions = await getConnectionOptions();
     Object.assign(connectionOptions, {
-      logging: this.config.logging || 'all'
+      entities: [__dirname + '/**/entity/*.{ts, js}'],
+      logging: this.config.logging || 'all',
     });
 
     // create typeorm connection

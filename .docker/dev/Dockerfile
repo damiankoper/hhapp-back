@@ -6,13 +6,9 @@ RUN apk add --no-cache git
 
 WORKDIR /app
 RUN npm install -g pm2
-RUN pm2 install typescript --docker
 COPY ./package*.json ./
 RUN npm install
 COPY ./.docker/wait-for /
 
-
-#prod build
-FROM develop-stage as production-stage
-ENV NODE_ENV=production
 COPY . .
+RUN npm run build
