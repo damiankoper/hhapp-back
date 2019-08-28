@@ -14,3 +14,4 @@ LICENSE
 .vscode
 .docker
 !.docker/wait-for
+!.docker/**/*.config.js

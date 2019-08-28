@@ -18,7 +18,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "pretty": false
   },
   "include": [
     "src/**/*",
@@ -26,6 +27,7 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/__mocks__/**/*.*"
   ]
 }

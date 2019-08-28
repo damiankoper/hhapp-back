@@ -3,16 +3,15 @@ services:
   hhapp-back-test:
     build:
       context: .
-      dockerfile: .docker/Dockerfile
-      target: 'develop-stage'
+      dockerfile: ./.docker/test/Dockerfile
     ports:
       - '9229:9229'
-    tty: true    
+    tty: true
     volumes:
       - '.:/app'
       - '/app/node_modules' # Used to keep all modules inside container
     depends_on:
-      - hhapp-back-test-database   
+      - hhapp-back-test-database
     environment:
       DB_HOST: 'hhapp-back-test-database'
 

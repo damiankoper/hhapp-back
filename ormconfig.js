@@ -5,9 +5,6 @@ module.exports = {
   "username": "hhapp",
   "password": "password",
   "database": "hhapp",
-  "entities": [
-    "./src/entity/*.ts"
-  ],
   "logging": true,
   "synchronize": true
 }
