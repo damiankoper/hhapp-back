@@ -4,11 +4,10 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: .docker/Dockerfile
-      target: production-stage
+      dockerfile: .docker/prod/Dockerfile
     ports:
       - '3000:3000'
-    command: sh -c '/wait-for -t 60 hhapp-back-prod-database:3306 -- pm2-runtime start ecosystem.prod.config.js'
+    command: sh -c '/wait-for -t 60 hhapp-back-prod-database:3306 -- pm2-runtime start .docker/prod/ecosystem.config.js'
     depends_on:
       - hhapp-back-prod-database
     environment:
@@ -19,7 +18,7 @@ services:
     image: mariadb
     restart: always
     volumes:
-      - ./.docker/production/mariadb:/var/lib/mysql
+      - ./.docker/prod/mariadb:/var/lib/mysql
     environment:
       MYSQL_DATABASE: 'hhapp'
       MYSQL_USER: 'hhapp'

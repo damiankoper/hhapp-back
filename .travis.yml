@@ -13,6 +13,6 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
-  - docker-compose -f docker-compose.test.yml run hhapp-back-test npm run coverage
+  - docker-compose -f .docker/test/docker-compose.yml --project-directory ./ run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run coverage
 after_script:
-  - docker-compose -f docker-compose.test.yml run -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID hhapp-back-test /bin/sh -c "cat coverage/lcov.info | npx coveralls"
+  - ocker-compose -f .docker/test/docker-compose.yml --project-directory ./ run -e TRAVIS=$TRAVIS -e TRAVIS_JOB_ID=$TRAVIS_JOB_ID hhapp-back-test /bin/sh -c "cat coverage/lcov.info | npx coveralls"
