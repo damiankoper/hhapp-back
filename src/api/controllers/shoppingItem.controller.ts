@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import ShoppingItem from '../../entity/ShoppingItem';
-import SessionMiddleware from '../middlewares/session.middleware';
 import BaseController from './base.controller';
 export default class ShoppingItemController extends BaseController {
   public constructor(router?: Router) {
@@ -20,9 +19,9 @@ export default class ShoppingItemController extends BaseController {
     }
   }
 
-  public async store(req: Request, res: Response) {
-    const item = await ShoppingItem.create(req.body).save();
-    return res.status(201).send(item);
+  public async storeForUser(req: Request, res: Response) {
+    // const item = await ShoppingItem.create(req.body).save();
+    return res.status(201).send(/* item */);
   }
 
   public async update(req: Request, res: Response) {
@@ -40,11 +39,4 @@ export default class ShoppingItemController extends BaseController {
       item.remove();
       return res.send(item);
     }
-    return res.status(404).send();
   }
-
-  protected initMiddleware(router: Router) {
-    const session = new SessionMiddleware();
-    router.use(session.validate.bind(session));
-  }
-}

@@ -1,13 +1,21 @@
 import { Router } from 'express';
 import UserController from '../controllers/user.controller';
+import ShoppingItemController from '../controllers/shoppingItem.controller';
+//import SessionMiddleware from '../middlewares/session.middleware';
+
 
 const UsersRouter: Router = Router();
-const userController = new UserController(UsersRouter);
+//const session = new SessionMiddleware();
+//UsersRouter.use(session.validate.bind(session));
 
+const userController = new UserController();
 UsersRouter.get('/', userController.get);
 UsersRouter.get('/:id', userController.find);
 UsersRouter.post('/', userController.store);
 UsersRouter.put('/:id', userController.update);
 UsersRouter.delete('/:id', userController.delete);
+
+const shoppingItemController = new ShoppingItemController();
+UsersRouter.post('/:userId/shoppingItems', shoppingItemController.storeForUser);
 
 export default UsersRouter;

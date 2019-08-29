@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { Request, Response, Router } from 'express';
 import User from '../../entity/User';
-import SessionMiddleware from '../middlewares/session.middleware';
 import BaseController from './base.controller';
 export default class UserController extends BaseController {
   public constructor(router?: Router) {
@@ -22,6 +21,7 @@ export default class UserController extends BaseController {
   }
 
   public async store(req: Request, res: Response) {
+    // TODO handle errors everywhere 500 by default
     req.body.password = await bcrypt.hash(req.body.password, 12);
     const user = await User.create(req.body).save();
     (user.password as any) = undefined;
@@ -44,10 +44,5 @@ export default class UserController extends BaseController {
       return res.send(user);
     }
     return res.status(404).send();
-  }
-
-  protected initMiddleware(router: Router) {
-    const session = new SessionMiddleware();
-    router.use(session.validate.bind(session));
   }
 }
