@@ -1,37 +1,46 @@
 import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-    OneToMany,
-    ManyToOne,
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import Shop from './Shop';
 import ShoppingListItem from './ShoppingListItem';
 import User from './User';
-import Shop from './Shop';
 
 @Entity()
 export default class ShoppingList extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    public id!: number;
+  @PrimaryGeneratedColumn()
+  public id!: number;
 
-    @Column()
-    public name!: string;
+  @Column()
+  public name!: string;
 
-    @OneToMany(type => ShoppingListItem, shoppingListItem => shoppingListItem.shoppingList)
-    public items!: ShoppingListItem[];
+  @OneToMany(
+    type => ShoppingListItem,
+    shoppingListItem => shoppingListItem.shoppingList
+  )
+  public items!: ShoppingListItem[];
 
-    @ManyToOne(type => User, user => user.shoppingLists, { nullable: true, onDelete: "CASCADE" })
-    public assigned?: User;
+  @ManyToOne(type => User, user => user.shoppingLists, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  public assigned?: User;
 
-    @ManyToOne(type => Shop, shop => shop.shoppingLists, { nullable: true, onDelete: "CASCADE" })
-    public shop?: Shop;
+  @ManyToOne(type => Shop, shop => shop.shoppingLists, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  public shop?: Shop;
 
-    @CreateDateColumn()
-    public createdAt!: Date;
+  @CreateDateColumn()
+  public createdAt!: Date;
 
-    @UpdateDateColumn()
-    public updatedAt!: Date;
+  @UpdateDateColumn()
+  public updatedAt!: Date;
 }

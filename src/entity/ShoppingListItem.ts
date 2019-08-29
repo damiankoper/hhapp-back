@@ -1,31 +1,34 @@
 import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-    ManyToOne,
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import ShoppingList from './ShoppingList';
 
 @Entity()
 export default class ShoppingListItem extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    public id!: number;
+  @PrimaryGeneratedColumn()
+  public id!: number;
 
-    @Column()
-    public name!: string;
+  @Column()
+  public name!: string;
 
-    @Column({ type: "float" })
-    public quantity!: number;
+  @Column({ type: 'float' })
+  public quantity!: number;
 
-    @ManyToOne(type => ShoppingList, shoppingList => shoppingList.items, { onDelete: "CASCADE", nullable: false })
-    public shoppingList!: ShoppingList;
+  @ManyToOne(type => ShoppingList, shoppingList => shoppingList.items, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  public shoppingList!: ShoppingList;
 
-    @CreateDateColumn()
-    public createdAt!: Date;
+  @CreateDateColumn()
+  public createdAt!: Date;
 
-    @UpdateDateColumn()
-    public updatedAt!: Date;
+  @UpdateDateColumn()
+  public updatedAt!: Date;
 }
