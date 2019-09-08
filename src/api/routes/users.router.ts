@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import ShoppingItemController from '../controllers/shoppingItem.controller';
 import UserController from '../controllers/user.controller';
-// import SessionMiddleware from '../middlewares/session.middleware';
+import SessionMiddleware from '../middlewares/session.middleware';
 
 const UsersRouter: Router = Router();
-// const session = new SessionMiddleware();
-// UsersRouter.use(session.validate.bind(session));
+const session = new SessionMiddleware();
+UsersRouter.use(session.validate.bind(session));
 
 const userController = new UserController();
 UsersRouter.get('/', userController.get);
