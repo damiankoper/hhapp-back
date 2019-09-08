@@ -5,8 +5,8 @@
 /users/:id/shoppingItems
 /users/:id/shoppingLists
 
-/shoppingItems
-/shoppingItems/:id
+/shoppingItems get
+/shoppingItems/:id update, delete,get, 
 
 /shops
 /shops/:id
