@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import Shop from '../../entity/Shop';
 import BaseController from './base.controller';
 export default class ShopController extends BaseController {
-
   public async get(req: Request, res: Response) {
     return res.send(await Shop.find());
   }
