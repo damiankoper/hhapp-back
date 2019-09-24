@@ -1,0 +1,68 @@
+@startuml Entities
+title Basic shopping entities
+'skinparam linetype ortho
+
+object User{
+  + id
+  + username
+  + password
+  + firstName
+  + lastName
+  + color: varchar(7)
+  + shoppingItems: ShoppingItem
+}
+
+object ShoppingCategory{
+  + id
+  + name
+  + sharedByDefault
+  + color: varchar(7)
+}
+
+object Shop{
+  + id
+  + name
+  + defaultCategory: ShoppingCategory
+  + color: varchar(7)
+}
+
+object ShoppingItem{
+  + id
+  + name
+  + price
+  + quantity
+  + unitDiscount
+  + date
+  + shared: boolean
+  + shop: Shop
+  + category: ShoppingCategory
+  + boughtBy: User
+  + boughtFor: User
+}
+
+object ShoppingList{
+  + id
+  + name
+  + shop: Shop|null
+  + items: ShoppingListItem[]
+  + assigned: User|null
+}
+
+object ShoppingListItem{
+  + id
+  + name
+  + quantity
+  + shoppingList: ShoppingList
+}
+
+User "1" -down-{ "0..*" ShoppingItem : has\nbought >
+User "1" -down-{ "0..*" ShoppingList
+
+ShoppingItem "1" -up-> "1" User : is bought\nfor >
+
+ShoppingList "1" --{ "0..*" ShoppingListItem
+
+ShoppingItem "1" -- "1" ShoppingCategory
+ShoppingItem "1" -- "1" Shop
+
+@enduml
