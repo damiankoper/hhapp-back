@@ -23,19 +23,22 @@
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "prepublishOnly": "npm run build",
     "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
-    "build": "tsc --pretty",
+    "build": "tsc",
     "test": "jest --runInBand",
-    "coverage": "jest --coverage --runInBand --collectCoverageFrom=!*.js",
-    "watch": "npm run build -- --watch",
+    "coverage": "jest --coverage --runInBand",
+
+    "watch": "npm run build -- --watch --preserveWatchOutput",
     "watch:docker": "npm run watch -- --preserveWatchOutput",
     "watch:test": "jest --watch --runInBand",
-
-    "docker:test:watch": "docker-compose  -f docker-compose.test.yml run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run watch:test; docker-compose -f docker-compose.test.yml down -v",
-    "docker:test": "docker-compose -f docker-compose.test.yml run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run coverage; docker-compose -f docker-compose.test.yml down -v",
-
-    "docker:dev:exec": "docker-compose exec hhapp-back-dev",
-    "docker:dev": "docker-compose up --build",
-    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
+    "docker:test": "docker-compose -f .docker/test/docker-compose.yml --project-directory ./ run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run coverage; npm run docker:test:down",
+    "docker:test:watch": "docker-compose  -f .docker/test/docker-compose.yml --project-directory ./ run hhapp-back-test /wait-for -t 60 hhapp-back-test-database:3306 -- npm run watch:test; npm run docker:test:down",
+    "docker:test:build": "docker-compose -f .docker/test/docker-compose.yml --project-directory ./ build",
+    "docker:test:down": "docker-compose -f .docker/test/docker-compose.yml --project-directory ./ down -v",
+    "docker:dev": "docker-compose -f .docker/dev/docker-compose.yml --project-directory ./ up --build; npm run docker:dev:down",
+    "docker:dev:exec": "docker-compose -f .docker/dev/docker-compose.yml --project-directory ./ exec hhapp-back-dev",
+    "docker:dev:build": "docker-compose -f .docker/dev/docker-compose.yml --project-directory ./ build",
+    "docker:dev:down": "docker-compose -f .docker/dev/docker-compose.yml --project-directory ./ down -v",
+    "docker:prod": "docker-compose -f .docker/prod/docker-compose.yml --project-directory ./ up --build"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -56,7 +59,6 @@
     "rimraf": "^2.7.1",
     "supertest": "^4.0.2",
     "ts-jest": "^23.10.3",
-    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "typeorm": "^0.2.18",
