@@ -46,7 +46,7 @@ export default class ShoppingItemController extends BaseController {
       if (!item) {
         throw new Error();
       }
-      await ShoppingItem.merge(item, req.body);
+      ShoppingItem.merge(item, req.body);
       if (req.body.boughtById) {
         const user = await User.findOne(req.body.boughtById);
         if (!user) {
@@ -94,7 +94,7 @@ export default class ShoppingItemController extends BaseController {
   }
 
   private async _store(req: Request, res: Response) {
-    const item = await ShoppingItem.create(req.body);
+    const item = ShoppingItem.create(req.body);
     const user = await User.findOne(req.body.userId);
     const shop = await Shop.findOne(req.body.shopId);
     const category = await ShoppingCategory.findOne(req.body.categoryId);

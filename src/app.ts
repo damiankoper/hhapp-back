@@ -2,9 +2,9 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Server } from 'net';
 import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
-import ShopRouter from './api/routes/shop.router';
 import SessionRouter from './api/routes/session.router';
-import ShoppingItemRouter from './api/routes/shoppingItem.router';
+import ShoppingItemsRouter from './api/routes/shoppingItems.router';
+import ShopsRouter from './api/routes/shops.router';
 import UsersRouter from './api/routes/users.router';
 
 interface IAppConfig {
@@ -51,7 +51,7 @@ export default class App {
   private initRoutes(app: express.Application) {
     app.use('/users', UsersRouter);
     app.use('/session', SessionRouter);
-    app.use('/shoppingItems', ShoppingItemRouter);
-    app.use('/shops', ShopRouter);
+    app.use('/shoppingItems', ShoppingItemsRouter);
+    app.use('/shops', ShopsRouter);
   }
 }

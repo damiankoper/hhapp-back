@@ -39,10 +39,14 @@ describe('ShoppingItems controller', () => {
     await app.destroy();
   });
 
-  it('should create shoppingItem', async () => {
+  function fillItem() {
     shoppingItemData.boughtForId = shoppingItemDataSetup.user.id;
     shoppingItemData.shopId = shoppingItemDataSetup.shop.id;
     shoppingItemData.categoryId = shoppingItemDataSetup.category.id;
+  }
+
+  it('should create shoppingItem', async () => {
+    fillItem();
     const response = await request(express)
       .post('/users/' + shoppingItemDataSetup.user.id + '/shoppingItems')
       .send(shoppingItemData)
@@ -52,9 +56,7 @@ describe('ShoppingItems controller', () => {
     expect(response.body.id).toBeGreaterThan(0);
   });
   it('should find shoppingItems for user', async () => {
-    shoppingItemData.boughtForId = shoppingItemDataSetup.user.id;
-    shoppingItemData.shopId = shoppingItemDataSetup.shop.id;
-    shoppingItemData.categoryId = shoppingItemDataSetup.category.id;
+    fillItem();
     let response = await request(express)
       .get('/users/' + shoppingItemDataSetup.user.id + '/shoppingItems')
       .expect(200);

@@ -34,16 +34,30 @@ describe('ShoppingItems controller', () => {
     }
     await shoppingItemDataSetup.destroy();
     await shoppingItemDataSetup.create();
+    fillItem();
   });
 
   afterAll(async () => {
     await app.destroy();
   });
-  function doCreateItem() {
+
+  function fillItem() {
     shoppingItemData.boughtForId = shoppingItemDataSetup.user.id;
     shoppingItemData.shopId = shoppingItemDataSetup.shop.id;
     shoppingItemData.categoryId = shoppingItemDataSetup.category.id;
     shoppingItemData.boughtById = shoppingItemDataSetup.user.id;
+  }
+  async function createItem() {
+    const item = ShoppingItem.create(shoppingItemData);
+    const user = shoppingItemDataSetup.user;
+    const shop = shoppingItemDataSetup.shop;
+    const category = shoppingItemDataSetup.category;
+    const userBoughtFor = shoppingItemDataSetup.user;
+    item.boughtBy = user;
+    item.shop = shop;
+    item.boughtFor = userBoughtFor;
+    item.category = category;
+    return item.save();
   }
 
   it('should get shoppingItems', async () => {
@@ -53,14 +67,9 @@ describe('ShoppingItems controller', () => {
     expect(response.body).toHaveLength(0);
   });
   it('should find an item', async () => {
-    doCreateItem();
-    let response = await request(express)
-      .post('/shoppingItems/')
-      .send(shoppingItemData)
-      .expect(201);
-    expect(response.body.name).toEqual(shoppingItemData.name);
-    response = await request(express)
-      .get('/shoppingItems/' + response.body.id)
+    const item = await createItem();
+    const response = await request(express)
+      .get('/shoppingItems/' + item.id)
       .expect(200);
     expect(response.body.name).toEqual(shoppingItemData.name);
   });
@@ -70,7 +79,6 @@ describe('ShoppingItems controller', () => {
       .expect(404);
   });
   it('should create shoppingItem', async () => {
-    doCreateItem();
     const response = await request(express)
       .post('/shoppingItems/')
       .send(shoppingItemData)
@@ -81,14 +89,9 @@ describe('ShoppingItems controller', () => {
     expect(await ShoppingItem.findOne(response.body.id)).not.toBeUndefined();
   });
   it('should update primitive value of ShoppingItem', async () => {
-    doCreateItem();
+    const item = await createItem();
     let response = await request(express)
-      .post('/shoppingItems')
-      .send(shoppingItemData)
-      .expect(201);
-    expect(response.body.name).toEqual(shoppingItemData.name);
-    response = await request(express)
-      .get('/shoppingItems/' + response.body.id)
+      .get('/shoppingItems/' + item.id)
       .expect(200);
     const newPrice = 20.0;
     shoppingItemData.price = newPrice;
@@ -99,14 +102,9 @@ describe('ShoppingItems controller', () => {
     expect(response.body.price).toEqual(newPrice);
   });
   it('should update relation of ShoppingItem', async () => {
-    doCreateItem();
+    const item = await createItem();
     let response = await request(express)
-      .post('/shoppingItems')
-      .send(shoppingItemData)
-      .expect(201);
-    expect(response.body.name).toEqual(shoppingItemData.name);
-    response = await request(express)
-      .get('/shoppingItems/' + response.body.id)
+      .get('/shoppingItems/' + item.id)
       .expect(200);
     shoppingItemData.shopId = shoppingItemDataSetup.shopForUpdate.id;
     response = await request(express)
@@ -116,20 +114,15 @@ describe('ShoppingItems controller', () => {
     expect(response.body.shop.id).toEqual(shoppingItemData.shopId);
   });
   it('should delete an item', async () => {
-    doCreateItem();
-    let response = await request(express)
-      .post('/shoppingItems')
-      .send(shoppingItemData)
-      .expect(201);
-    response = await request(express)
-      .delete('/shoppingItems/' + response.body.id)
+    const item = await createItem();
+    const response = await request(express)
+      .delete('/shoppingItems/' + item.id)
       .expect(200);
     expect(response.body.price).toEqual(shoppingItemData.price);
     const itemAfterDeletion = await ShoppingItem.findOne(response.body.id);
     expect(itemAfterDeletion).toBeUndefined();
   });
   it('should fail if update not existing item', async () => {
-    doCreateItem();
     await request(express)
       .put('/shoppingItems/100')
       .send(shoppingItemData)
@@ -141,16 +134,14 @@ describe('ShoppingItems controller', () => {
       .expect(404);
   });
   it('should fail if store item without relation', async () => {
-    shoppingItemData.boughtForId = shoppingItemDataSetup.user.id;
-    shoppingItemData.shopId = shoppingItemDataSetup.shop.id;
-    shoppingItemData.categoryId = shoppingItemDataSetup.category.id;
+    const notExistingId = -1;
+    shoppingItemData.boughtForId = notExistingId;
     await request(express)
       .post('/shoppingItems/')
       .send(shoppingItemData)
       .expect(400);
   });
   it('should fail if update item with not exising relation', async () => {
-    doCreateItem();
     let response = await request(express)
       .post('/shoppingItems')
       .send(shoppingItemData)

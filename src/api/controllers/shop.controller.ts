@@ -23,7 +23,7 @@ export default class ShopController extends BaseController {
   public async update(req: Request, res: Response) {
     const shop = await Shop.findOne(req.params.id);
     if (shop) {
-      await Shop.merge(shop, req.body);
+      Shop.merge(shop, req.body);
       return res.send(await shop.save());
     }
     return res.status(404).send();
