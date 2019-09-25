@@ -2,5 +2,7 @@
     "typescript.tsdk": "node_modules/typescript/lib/",
     "jest.pathToJest": "docker-compose exec -T hhapp-back-dev node_modules/.bin/jest",
     "jest.debugMode": true,
-    "jest.autoEnable": false
+    "jest.autoEnable": false,
+    "plantuml.diagramsRoot": "docs/diagrams/src",
+    "plantuml.exportOutDir": "docs/diagrams/out",
 }
