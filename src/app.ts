@@ -3,6 +3,8 @@ import * as express from 'express';
 import { Server } from 'net';
 import { createConnection, getConnection, getConnectionOptions } from 'typeorm';
 import SessionRouter from './api/routes/session.router';
+import ShoppingItemsRouter from './api/routes/shoppingItems.router';
+import ShopsRouter from './api/routes/shops.router';
 import UsersRouter from './api/routes/users.router';
 
 interface IAppConfig {
@@ -20,7 +22,7 @@ export default class App {
   public async run() {
     const connectionOptions = await getConnectionOptions();
     Object.assign(connectionOptions, {
-      entities: [__dirname + '/**/entity/*.{ts, js}'],
+      entities: [__dirname + '/**/entity/*{.js,.ts}'],
       logging: this.config.logging || 'all',
     });
 
@@ -49,5 +51,7 @@ export default class App {
   private initRoutes(app: express.Application) {
     app.use('/users', UsersRouter);
     app.use('/session', SessionRouter);
+    app.use('/shoppingItems', ShoppingItemsRouter);
+    app.use('/shops', ShopsRouter);
   }
 }
